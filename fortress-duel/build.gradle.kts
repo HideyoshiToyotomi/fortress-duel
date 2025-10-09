@@ -29,6 +29,7 @@ dependencies {
     implementation("org.glassfish.tyrus:tyrus-server:2.1.4")
     implementation("org.glassfish.tyrus:tyrus-container-grizzly-server:2.1.4")
     implementation("com.h2database:h2:2.2.224")
+    implementation("at.favre.lib:bcrypt:0.10.2")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
