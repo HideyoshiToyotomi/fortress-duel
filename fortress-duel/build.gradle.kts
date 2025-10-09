@@ -1,6 +1,9 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     application
     java
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 java {
@@ -22,6 +25,16 @@ dependencies {
 
     // Testování (JUnit 5)
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
+
+    implementation("org.glassfish.tyrus:tyrus-server:2.1.4")
+    implementation("org.glassfish.tyrus:tyrus-container-grizzly-server:2.1.4")
+    implementation("com.h2database:h2:2.2.224")
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveBaseName.set("fortress-ws")
+    archiveVersion.set("0.1.0")
+    archiveClassifier.set("")
 }
 
 tasks.test {
@@ -29,6 +42,8 @@ tasks.test {
 }
 
 application {
-    mainClass.set("cz.cardgames.fortressduel.Main")
+    mainClass.set("cz.cardgames.fortressduel.adapters.ws.WsServerApp")
     applicationDefaultJvmArgs = listOf("-Dorg.slf4j.simpleLogger.defaultLogLevel=debug")
 }
+
+
