@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS players (
+  player_id   VARCHAR(100) PRIMARY KEY,
+  name        VARCHAR(200) NOT NULL,
+  pass_hash   VARCHAR(100) NOT NULL,
+  created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_players_name ON players(name);
+
+CREATE TABLE IF NOT EXISTS rooms (
+  room_id     VARCHAR(100) PRIMARY KEY,
+  created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+-- varianta A: 1:1 room↔game
+CREATE TABLE IF NOT EXISTS games (
+  room_id     VARCHAR(100) PRIMARY KEY REFERENCES rooms(room_id) ON DELETE CASCADE,
+  state_json  CLOB NOT NULL,
+  seed        BIGINT NOT NULL,
+  created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

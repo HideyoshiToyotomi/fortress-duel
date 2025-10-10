@@ -27,9 +27,11 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
 
     implementation("org.glassfish.tyrus:tyrus-server:2.1.4")
+    implementation("org.glassfish.tyrus:tyrus-client:2.1.4")
     implementation("org.glassfish.tyrus:tyrus-container-grizzly-server:2.1.4")
     implementation("com.h2database:h2:2.2.224")
     implementation("at.favre.lib:bcrypt:0.10.2")
+    implementation("org.flywaydb:flyway-core:10.17.0")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
@@ -43,7 +45,7 @@ tasks.test {
 }
 
 application {
-    mainClass.set("cz.cardgames.fortressduel.adapters.ws.WsServerApp")
+    mainClass.set("cz.cardgames.fortressduel.adapters.ws.GameServerApp")
     applicationDefaultJvmArgs = listOf("-Dorg.slf4j.simpleLogger.defaultLogLevel=debug")
 }
 

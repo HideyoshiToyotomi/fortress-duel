@@ -1,10 +1,14 @@
-package cz.cardgames.fortressduel.adapters.peristence.db;
+package cz.cardgames.fortressduel.adapters.persistence.db;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.Arrays;
+
+import org.flywaydb.core.Flyway;
+
 
 /**
  * Minimal DB bootstrap:
@@ -39,26 +43,17 @@ public final class Db {
         try {
             Files.createDirectories(Path.of(DB_DIR));
             try (Connection con = get(); Statement st = con.createStatement()) {
-                // players: minimal identity we can extend later (email, password hash, etc.)
-                st.execute("""
-                    CREATE TABLE IF NOT EXISTS players (
-                        player_id   VARCHAR(100) PRIMARY KEY,
-                        name        VARCHAR(200) NOT NULL UNIQUE,
-                        pass_hash   VARCHAR(100) NOT NULL,
-                        created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    )
-                """);
 
-                // games: start simple — store serialized game state as JSON text (CLOB)
-                st.execute("""
-                    CREATE TABLE IF NOT EXISTS games (
-                        game_id     VARCHAR(100) PRIMARY KEY,
-                        room_id     VARCHAR(100) NOT NULL,
-                        state_json  CLOB NOT NULL,
-                        created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        updated_at  TIMESTAMP
-                    )
-                """);
+                Flyway.configure()
+                        .dataSource(JDBC_URL, USER, PASS)
+                        .load()
+                        .migrate();
+
+                var flyway = Flyway.configure().dataSource(JDBC_URL, USER, PASS).load();
+                flyway.migrate();
+                Arrays.stream(flyway.info().all()).forEach(i ->
+                        System.out.println(i.getVersion() + " " + i.getType() + " " + i.getState() + " " + i.getDescription())
+                );
             }
         } catch (Exception e) {
             throw new RuntimeException("DB init failed", e);

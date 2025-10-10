@@ -1,4 +1,4 @@
-package cz.cardgames.fortressduel.appliaction.security;
+package cz.cardgames.fortressduel.application.security;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 

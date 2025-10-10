@@ -1,12 +1,13 @@
 package cz.cardgames.fortressduel.adapters.ws;
 
 
+import cz.cardgames.fortressduel.adapters.persistence.db.Db;
 import jakarta.websocket.DeploymentException;
 import org.glassfish.tyrus.server.Server;
 
 import java.util.concurrent.CountDownLatch;
 
-public class WsServerApp {
+public class GameServerApp {
 
     public static void main (String[] args) {
         Server server = new Server("0.0.0.0", 8081, "/", null,
@@ -21,6 +22,7 @@ public class WsServerApp {
         }));
 
         try {
+            Db.init();
             server.start();
             System.out.println("WS started: ws://0.0.0.0:8081/ws/ping");
             stop.await(); // keep running until shutdown
