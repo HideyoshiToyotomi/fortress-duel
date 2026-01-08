@@ -2,7 +2,6 @@ package cz.cardgames.fortressduel.adapters.ws;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.JsonNode;
 import cz.cardgames.fortressduel.adapters.persistence.db.H2PlayerRepository;
 import cz.cardgames.fortressduel.adapters.ws.protocol.*;
 import cz.cardgames.fortressduel.application.security.Passwords;
@@ -11,7 +10,6 @@ import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
