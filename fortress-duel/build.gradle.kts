@@ -4,6 +4,7 @@ plugins {
     application
     java
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 java {
@@ -44,9 +45,16 @@ tasks.test {
     useJUnitPlatform()
 }
 
+javafx {
+    version = "21.0.3"
+    modules = listOf("javafx.controls", "javafx.fxml")
+}
+
 application {
     mainClass.set("cz.cardgames.fortressduel.adapters.ws.GameServerApp")
     applicationDefaultJvmArgs = listOf("-Dorg.slf4j.simpleLogger.defaultLogLevel=debug")
 }
+
+
 
 

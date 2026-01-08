@@ -44,11 +44,6 @@ public final class Db {
             Files.createDirectories(Path.of(DB_DIR));
             try (Connection con = get(); Statement st = con.createStatement()) {
 
-                Flyway.configure()
-                        .dataSource(JDBC_URL, USER, PASS)
-                        .load()
-                        .migrate();
-
                 var flyway = Flyway.configure().dataSource(JDBC_URL, USER, PASS).load();
                 flyway.migrate();
                 Arrays.stream(flyway.info().all()).forEach(i ->

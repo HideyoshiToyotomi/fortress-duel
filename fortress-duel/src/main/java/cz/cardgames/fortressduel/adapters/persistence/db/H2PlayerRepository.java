@@ -45,4 +45,17 @@ public class H2PlayerRepository implements PlayerRepository {
             throw new RuntimeException("findPassHashByName failed", e);
         }
     }
+
+    @Override
+    public String findPlayerIdByName(String name) {
+        String sql = "SELECT player_id FROM players WHERE name = ? LIMIT 1";
+        try (var con = Db.get(); var ps = con.prepareStatement(sql)) {
+            ps.setString(1, name);
+            try (var rs = ps.executeQuery()) {
+                return rs.next() ? rs.getString(1) : null;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("findPlayerIdByName failed", e);
+        }
+    }
 }

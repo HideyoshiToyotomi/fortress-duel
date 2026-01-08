@@ -9,6 +9,9 @@ public interface PlayerRepository {
     /** Create new player row (IDs are strings – generated outside DB) */
     void create(String playerId, String name, String passHash);
 
+    /** @return playerId for given name or null if not found */
+    String findPlayerIdByName(String name);
+
     /** @return stored BCrypt hash or null if not found */
     String findPassHashByName(String name);
 }
