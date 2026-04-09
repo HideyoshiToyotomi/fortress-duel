@@ -10,10 +10,11 @@ public final class PlayerState {
 
     private int castle;
     private int wall;
+    private final DeckState deck;
 
     public PlayerState(String playerId, String teamId,
                        Resources resources, Workers workers,
-                       int castle, int wall) {
+                       int castle, int wall, DeckState deck) {
         this.playerId = Objects.requireNonNull(playerId);
         this.teamId = teamId; // může být null
         this.resources = Objects.requireNonNull(resources);
@@ -21,6 +22,7 @@ public final class PlayerState {
         if (castle < 0 || wall < 0) throw new IllegalArgumentException("castle/wall cannot be negative");
         this.castle = castle;
         this.wall = wall;
+        this.deck = Objects.requireNonNull(deck);
     }
 
     public String playerId() { return playerId; }
@@ -30,6 +32,8 @@ public final class PlayerState {
 
     public int castle() { return castle; }
     public int wall() { return wall; }
+    public DeckState deck() { return deck; }
+
 
     public void produceEndTurn() {
         resources.add(workers.produce());
